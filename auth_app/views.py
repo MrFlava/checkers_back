@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout, get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import GenericAPIView, CreateAPIView
+from rest_framework.generics import GenericAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,7 +10,13 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import RefreshJSONWebTokenSerializer
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
-from auth_app.serializers import LoginSerializer, JWTSerializer, UserDetailsSerializer, UserSerializer
+from auth_app.serializers import  (
+    LoginSerializer,
+    JWTSerializer,
+    UserDetailsSerializer,
+    UserSerializer,
+    UpdateUserSerializer
+)
 from auth_app.utils import jwt_encode
 User = get_user_model()
 
@@ -89,6 +95,15 @@ class CurrentUserView(APIView):
     def get(self, request):
         serializer = UserDetailsSerializer(request.user)
         return Response(serializer.data)
+
+
+class CurrentUserUpdateView(UpdateAPIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UpdateUserSerializer
+
+    def get_object(self):
+        return User.objects.get(pk=self.request.user.pk)
 
 
 class RefreshTokenView(JSONWebTokenAPIView):

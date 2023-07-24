@@ -81,7 +81,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password',)
 
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -97,8 +97,17 @@ class UserSerializer(serializers.ModelSerializer):
 class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name',)
         read_only_fields = ('email',)
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',)
 
 
 class JWTSerializer(serializers.Serializer):
