@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # apps
     'auth_app',
+    'checkers_statistics',
 ]
 
 MIDDLEWARE = [
