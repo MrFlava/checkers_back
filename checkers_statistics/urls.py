@@ -6,5 +6,5 @@ app_name = "statistics"
 
 urlpatterns = [
     path('create/', StatisticsCreateView.as_view(), name='create-game-statistics'),
-    path('my-statistics/', MyStatisticsView.as_view(), name='my-statistics')
+    path('my-s1tatistics/', MyStatisticsView.as_view(), name='my-statistics')
 ]
