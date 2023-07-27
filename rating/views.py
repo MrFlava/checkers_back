@@ -6,7 +6,7 @@ from auth_app.authentication import TokenAuthentication
 from rating.serializers import UsersListSerializer
 
 
-class UsersRatingView(ListAPIView):
+class UsersListView(ListAPIView):
     serializer_class = UsersListSerializer
     permission_classes = (IsAuthenticated, )
     authentication_classes = (TokenAuthentication,)
